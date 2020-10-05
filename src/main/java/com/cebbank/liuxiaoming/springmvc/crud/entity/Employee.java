@@ -16,7 +16,7 @@ public class Employee {
 	
 	private Department department;
 
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birth;
 	
 	@NumberFormat(pattern="#,###,###.#")

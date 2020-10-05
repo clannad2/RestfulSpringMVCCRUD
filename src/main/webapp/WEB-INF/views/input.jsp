@@ -9,14 +9,25 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
-    <form:form action="emp" method="post">
-        <%--path对应html表单的name属性值      --%>
-        Last Name:<form:input path="lastName"/>
+    <form:form action="${pageContext.request.contextPath }/emp" method="post" modelAttribute="employee">
+        <c:if test="${employee.id == null }">
+            <!-- path 属性对应 html 表单标签的 name 属性值 -->
+            LastName: <form:input path="lastName"/>
+        </c:if>
+        <c:if test="${employee.id != null }">
+            <form:hidden path="id"/>
+            <input type="hidden" name="_method" value="PUT"/>
+            <%-- 对于 _method 不能使用 form:hidden 标签, 因为 modelAttribute 对应的 bean 中没有 _method 这个属性 --%>
+            <%--
+            <form:hidden path="_method" value="PUT"/>
+            --%>
+        </c:if>
         <br>
         email:<form:input path="email"/>
         <br>
@@ -26,9 +37,15 @@
             genders.put("0","Female");
             request.setAttribute("genders",genders);
         %>
-        Gender:<form:radiobuttons path="gender" items="${genders}"></form:radiobuttons>
-        Department:<form:select path="department" items="${deparments}" itemLabel="id" itemValue="departmentName"></form:select>
-        <input type="submit" value="submit">
+        Gender:<form:radiobuttons path="gender" items="${genders}" delimiter="<br>"/>
+        <br>
+        Department:<form:select path="department.id" items="${departments}" itemLabel="departmentName" itemValue="id"/>
+        <br>
+        Birth:<form:input path="birth"/>
+        <br>
+        Salary:<form:input path="salary"/>
+        <br>
+        <input type="submit" value="Submit">
     </form:form>
 
 </body>
