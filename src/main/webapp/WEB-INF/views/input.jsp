@@ -16,9 +16,12 @@
 </head>
 <body>
     <form:form action="${pageContext.request.contextPath }/emp" method="post" modelAttribute="employee">
+<%--        <form:errors path="*"> </form:errors>--%>
+        <br>
         <c:if test="${employee.id == null }">
             <!-- path 属性对应 html 表单标签的 name 属性值 -->
             LastName: <form:input path="lastName"/>
+            <form:errors path="lastName"/>
         </c:if>
         <c:if test="${employee.id != null }">
             <form:hidden path="id"/>
@@ -30,6 +33,7 @@
         </c:if>
         <br>
         email:<form:input path="email"/>
+        <form:errors path="email"/>
         <br>
         <%
             Map<String,String> genders = new HashMap<>();
@@ -42,6 +46,7 @@
         Department:<form:select path="department.id" items="${departments}" itemLabel="departmentName" itemValue="id"/>
         <br>
         Birth:<form:input path="birth"/>
+        <form:errors path="birth"/>
         <br>
         Salary:<form:input path="salary"/>
         <br>
